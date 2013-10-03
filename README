@@ -5,6 +5,10 @@ To compile, run:
 
 $ make zfs_arc_shrink_shift
 
+- or -
+
+$ make
+
 To clean up use:
 
 $ make clean
