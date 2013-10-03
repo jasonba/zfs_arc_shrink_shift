@@ -60,8 +60,6 @@ main(int argc, char *argv[])
 	    return(1);
 	}
     }
-    printf("System has %.0f GB memory\n", memsize);
-    printf("shiftsize = %.0f\n", shiftsize);
 
     if (argc > 2) {
 	shift_input = argv[2];
@@ -72,8 +70,13 @@ main(int argc, char *argv[])
 		return(1);
 	    }
 	}
-	printf("shiftsize = %.0f\n", shiftsize);
     }
+
+#if DEBUG
+    printf("System has %.0f GB memory\n", memsize);
+    printf("shiftsize = %.0f\n", shiftsize);
+#endif
+
 
     zfs_arc_shrink_shift_min = (int)MIN(shiftsize,round(log2(memsize*4+1)));
     zfs_arc_shrink_shift_max = (int)MAX(shiftsize,round(log2(memsize*4+1)));

@@ -1,14 +1,30 @@
-This is a program that will advise upon the correct value to set for the /etc/system
-based tunable 'zfs_arc_shrink_shift'
+Purpose
+-------
+This is a program that will advise upon the correct value to set for the 
+/etc/system based tunable zfs_arc_shrink_shift, eg:
 
-To compile, run:
+set zfs:zfs_arc_shrink_shift = 9
 
+
+Build guidelines
+----------------
+There are various options for compiling this program:
+
+1) Normal build
+
+$ make clean
 $ make zfs_arc_shrink_shift
 
-- or -
 
-$ make
+2) Debug build 
 
-To clean up use:
+Dumps out shift variable and memory size after converting from input arguments
+which is my way of ensuring that I've got the C code right.
+
+$ make clean
+$ make debug 
+
+
+3) Cleaning up
 
 $ make clean

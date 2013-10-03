@@ -9,7 +9,13 @@ CC=cc
 
 # Compiler flags, we want debugging initially
 # may be reset to nothing for production
-CFLAGS=-g
+CFLAGS=
+
+all: zfs_arc_shrink_shift
+
+# How to make the debug binary
+debug: CC += -DDEBUG -g
+debug: zfs_arc_shrink_shift
 
 # Here's how we build the program
 zfs_arc_shrink_shift: zfs_arc_shrink_shift.o
