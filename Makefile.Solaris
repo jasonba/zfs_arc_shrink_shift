@@ -1,14 +1,14 @@
 #-------------------------------------------------------------
 # UNIX Makefile for the zfs_arc_shrink_shift utility
-# This is for MacOS X
+# This is for Solaris
 #-------------------------------------------------------------
 
 # What's our C compiler - use cc or gcc accordingly
 CC=cc
 
 # Compiler flags
-# Need to specify MACOS here to ensure we use u_int64_t instead of uint64_t
-CFLAGS=-DMACOS
+# Need to specify Solaris here to ensure we use bring in the PRId64 definition
+CFLAGS=-DSOLARIS
 
 # Here's how we build the program
 

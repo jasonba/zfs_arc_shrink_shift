@@ -1,3 +1,6 @@
+zfs_arc_shrink_shift
+====================
+
 Purpose
 -------
 This is a program that will advise upon the correct value to set for the 
@@ -5,24 +8,67 @@ This is a program that will advise upon the correct value to set for the
 
 set zfs:zfs_arc_shrink_shift = 9
 
+You need to supply the amount of memory the system has installed and it will
+tell you how much the system will attempt to shrink the ARC by during a 
+memory event.
+
+In the early days of NexentaStor, this used to default to 5, however as memory
+sizes increased the amount that each shrink event had to process also started
+to increase, often into the GB range.
+This lead to the system stalling whilst the ARC was shrunk and random latency
+for clients access the shares.
+
+Clearly it makes more sense to shrink less memory, more often than trying to
+shrink large amounts of memory infrequently.
+
+
+How to run
+----------
+If you run this program and tell it how much memory you have, it will advise
+what value you need to set for the zfs_arc_shrink_shift tunable, eg:
+
+$ ./zfs_arc_shrink_shift 192
+System has 192 GB memory
+shiftsize = 5
+zfs_arc_shrink_shift (min) value = 5
+tofree (min)= 6112 MB
+zfs_arc_shrink_shift (max) value = 10
+tofree (max)= 191 MB
+
+We can see that it's advising you set a value of 10 for a system with 192GB
+of RAM.
+
+
+Additional
+----------
+On NexentStor appliances you no longer need to manually set this.
+A script will determine the amount of memory installed and tune this 
+dynamically.  This makes more sense as appliances can have more memory 
+installed and a tunable that was hard coded several years ago when memory 
+was smaller, no longer makes sense now.
+
+
+
+
 
 Build guidelines
 ----------------
 There are various options for compiling this program:
 
-1) Normal build
+1) Pick the Makefile according to the platform you're compiling this on
+   and then create an appropriate soft link.
+
+   There are Makefiles supplied for MacOS, Linux and Solaris/Illumos.
+
+For example:
+
+$ rm Makefile
+$ ln -s Makefile.MacOSX Makefile
+
+2) Normal build
 
 $ make clean
 $ make zfs_arc_shrink_shift
-
-
-2) Debug build 
-
-Dumps out shift variable and memory size after converting from input arguments
-which is my way of ensuring that I've got the C code right.
-
-$ make clean
-$ make debug 
 
 
 3) Cleaning up
